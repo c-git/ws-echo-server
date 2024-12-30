@@ -13,7 +13,7 @@ pub struct DataStruct;
 #[shuttle_runtime::async_trait]
 impl shuttle_runtime::Service for DataStruct {
     async fn bind(mut self, addr: std::net::SocketAddr) -> Result<(), shuttle_runtime::Error> {
-        let server = TcpListener::bind(addr).expect("failed to bind to address");
+        let server = TcpListener::bind(dbg!(addr)).expect("failed to bind to address");
         for stream in server.incoming() {
             // TODO 2: Track number of active connections and setup to close out connections after timeout
             spawn(move || {
