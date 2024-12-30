@@ -24,6 +24,7 @@ impl shuttle_runtime::Service for DataStruct {
                 while let Ok(msg) = websocket.read() {
                     // We do not want to send back ping/pong messages.
                     if msg.is_binary() || msg.is_text() {
+                        // TODO 2: Log the message
                         if let Err(err) = websocket.send(msg) {
                             eprintln!("Error sending message: {err}");
                             break;
