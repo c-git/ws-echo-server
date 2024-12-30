@@ -15,12 +15,11 @@ impl shuttle_runtime::Service for DataStruct {
     async fn bind(mut self, addr: std::net::SocketAddr) -> Result<(), shuttle_runtime::Error> {
         let server = TcpListener::bind(dbg!(addr)).expect("failed to bind to address");
         for stream in server.incoming() {
-            // TODO 2: Track number of active connections and setup to close out connections after timeout
             spawn(move || {
                 let stream = stream.expect("TcpStream error");
                 let peer_addr = format!("{:?}", stream.peer_addr());
                 let mut websocket = tungstenite::accept(stream).expect("Hand shake failed");
-                println!("{peer_addr} - established a new connection");
+                println!("{peer_addr} [NEW] - established a new connection");
                 while let Ok(msg) = websocket.read() {
                     // We do not want to send back ping/pong messages.
                     println!("{peer_addr} - sent: {msg:?}");
@@ -37,7 +36,7 @@ impl shuttle_runtime::Service for DataStruct {
                         eprintln!("{peer_addr} - sent an unknown message: {msg:?}");
                     }
                 }
-                println!("{peer_addr} - disconnected");
+                println!("{peer_addr} [END] - disconnected");
             });
         }
         println!("Server Shutdown Gracefully"); // Unless we trap SIGINT then the code will not get here unless the socket is closed
