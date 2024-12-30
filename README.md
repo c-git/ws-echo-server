@@ -1,5 +1,6 @@
-# rust-crate-template
-Intended to be used as a starter for a crate
+# Websocket Echo Server
+
+Simple websocket server for testing based of the example echo server in [ewebsocket](https://github.com/rerun-io/ewebsock)
 
 ## License
 
