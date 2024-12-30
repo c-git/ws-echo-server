@@ -17,27 +17,27 @@ impl shuttle_runtime::Service for DataStruct {
         for stream in server.incoming() {
             // TODO 2: Track number of active connections and setup to close out connections after timeout
             spawn(move || {
-                // TODO 2: Log incoming IP
-                let mut websocket = tungstenite::accept(stream.expect("TcpStream error"))
-                    .expect("Hand shake failed");
-                eprintln!("New client connected");
+                let stream = stream.expect("TcpStream error");
+                let peer_addr = format!("{:?}", stream.peer_addr());
+                let mut websocket = tungstenite::accept(stream).expect("Hand shake failed");
+                println!("{peer_addr} - established a new connection");
                 while let Ok(msg) = websocket.read() {
                     // We do not want to send back ping/pong messages.
+                    println!("{peer_addr} - sent: {msg:?}");
                     if msg.is_binary() || msg.is_text() {
-                        // TODO 2: Log the message
                         if let Err(err) = websocket.send(msg) {
-                            eprintln!("Error sending message: {err}");
+                            eprintln!("{peer_addr} - Error sending message: {err}");
                             break;
                         } else {
-                            eprintln!("Responded.");
+                            println!("{peer_addr} - was sent back a copy of their message");
                         }
                     } else if msg.is_close() {
-                        eprintln!("Connection closed.");
+                        println!("{peer_addr} - sent a close connection message");
                     } else {
-                        eprintln!("Unknown message received: {msg:?}");
+                        eprintln!("{peer_addr} - sent an unknown message: {msg:?}");
                     }
                 }
-                eprintln!("Client left.");
+                println!("{peer_addr} - disconnected");
             });
         }
         eprintln!("Server Shutdown Gracefully");
