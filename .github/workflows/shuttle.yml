@@ -1,0 +1,19 @@
+name: Shuttle Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  run_tests:
+    uses: ./.github/workflows/general.yml
+  deploy:
+    runs-on: ubuntu-latest
+    needs: run_tests # Requires that the other job succeeds before this one will start
+    steps:
+      - uses: shuttle-hq/deploy-action@v2
+        with:
+          shuttle-api-key: ${{ secrets.SHUTTLE_API_KEY }}
+          project-id: proj_01JGB12QB6726NJM2GCBYC7CMB
