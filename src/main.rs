@@ -40,7 +40,7 @@ impl shuttle_runtime::Service for DataStruct {
                 println!("{peer_addr} - disconnected");
             });
         }
-        eprintln!("Server Shutdown Gracefully");
+        println!("Server Shutdown Gracefully"); // Unless we trap SIGINT then the code will not get here unless the socket is closed
         Ok(())
     }
 }
