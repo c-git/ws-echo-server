@@ -2468,7 +2468,7 @@ dependencies = [
 
 [[package]]
 name = "ws-echo-server"
-version = "0.1.2-dev"
+version = "0.1.2"
 dependencies = [
  "shuttle-runtime",
  "tungstenite 0.26.1",
