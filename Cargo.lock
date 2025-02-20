@@ -2103,7 +2103,7 @@ checksum = "1e9df38ee2d2c3c5948ea468a8406ff0db0b29ae1ffde1bcf20ef305bcc95c51"
 
 [[package]]
 name = "ws-echo-server"
-version = "0.1.3"
+version = "0.1.4-dev"
 dependencies = [
  "shuttle-runtime",
  "tungstenite",
