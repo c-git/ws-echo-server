@@ -10,5 +10,5 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-shuttle-runtime = "0.49.0"
-tungstenite = { version = "0.26.1", features = ["rustls-tls-webpki-roots"] }
+shuttle-runtime = "0.52.0"
+tungstenite = { version = "0.26.2", features = ["rustls-tls-webpki-roots"] }
